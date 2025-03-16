@@ -8,6 +8,11 @@ SwarmSimulator::SwarmSphereFormation::SwarmSphereFormation(int agentsCount, QVec
     , WORLD_MAX_SIZE(100.0) // Now using hard-code value for WORLD_MAX_SIZE.
     , SWARM_CENTER(swarmCenterPoint)
 {
+
+}
+
+void SwarmSimulator::SwarmSphereFormation::InitSwarm()
+{
     // Using seed = 42 for repeatables.
     // TODO: Make parameter for seed.
     QRandomGenerator qrng(42);

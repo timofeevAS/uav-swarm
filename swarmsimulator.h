@@ -25,6 +25,7 @@ private:
 
     QVector<Uav> m_Agents;
 
+    void InitSwarm();
     // TODO: Add simulation core.
 };
 
