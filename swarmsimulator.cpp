@@ -25,3 +25,9 @@ void SwarmSimulator::SwarmSphereFormation::InitSwarm()
 
     }
 }
+
+void SwarmSimulator::SwarmSphereFormation::SaveSwarmStateIntoDB()
+{
+    // TODO: I am planning to save states of Swarm into *.sqlite3 DB (file-database),
+    // cause it useful way to save data.
+}
