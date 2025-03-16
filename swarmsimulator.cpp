@@ -8,7 +8,7 @@ SwarmSimulator::SwarmSphereFormation::SwarmSphereFormation(int agentsCount, QVec
     , WORLD_MAX_SIZE(100.0) // Now using hard-code value for WORLD_MAX_SIZE.
     , SWARM_CENTER(swarmCenterPoint)
 {
-
+    InitSwarm();
 }
 
 void SwarmSimulator::SwarmSphereFormation::InitSwarm()
