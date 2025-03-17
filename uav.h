@@ -10,7 +10,7 @@ public:
         double interractionRadius,
         double selfRadius);
 
-    double CurrentPos() const;
+    QVector3D CurrentPos() const;
     double InterractionRadius() const;
     double SelfRadius() const;
     QVector3D Speed() const;

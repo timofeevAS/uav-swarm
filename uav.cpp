@@ -8,6 +8,11 @@ Uav::Uav(QVector3D startPos, double interractionRadius, double selfRadius)
 {
 }
 
+QVector3D Uav::CurrentPos() const
+{
+    return m_CurrentPosition;
+}
+
 double Uav::InterractionRadius() const
 {
     return m_InterractionRadius;
