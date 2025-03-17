@@ -5,6 +5,7 @@ Uav::Uav(QVector3D startPos, double interractionRadius, double selfRadius)
     , m_InterractionRadius(interractionRadius)
     , m_SelfRadius(selfRadius)
     , m_Speed(QVector3D()) // default constructor of QVector3D returns (0;0;0).
+    , m_CurrentGoal(QVector3D())
 {
 }
 
@@ -28,12 +29,22 @@ QVector3D Uav::Speed() const
     return m_Speed;
 }
 
-void Uav::setCurrentPos(const QVector3D & pos)
+void Uav::SetCurrentPos(const QVector3D & pos)
 {
     m_CurrentPosition = pos;
 }
 
-void Uav::setSpeed(const QVector3D & newSpeed)
+void Uav::SetSpeed(const QVector3D & newSpeed)
 {
     m_Speed = newSpeed;
+}
+
+QVector3D Uav::CurrentGoal() const
+{
+    return m_CurrentGoal;
+}
+
+void Uav::SetCurrentGoal(const QVector3D &newCurrentGoal)
+{
+    m_CurrentGoal = newCurrentGoal;
 }

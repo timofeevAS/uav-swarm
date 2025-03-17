@@ -18,6 +18,8 @@ class SwarmSphereFormation
 public:
     SwarmSphereFormation(int agentsCount, QVector3D swarmCenterPoint, double swarmDensity);
     ~SwarmSphereFormation();
+
+    void RunSimulation(int steps = 5);
 private:
     // Constants.
     unsigned short AGENTS_COUNT;
@@ -32,7 +34,7 @@ private:
 
     void InitSwarm();
     void SaveSwarmStateIntoDB();
-    // TODO: Add simulation core.
+    void BoidsStep();
 };
 
 

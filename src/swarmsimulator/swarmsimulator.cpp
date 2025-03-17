@@ -58,6 +58,7 @@ void SwarmSimulator::SwarmSphereFormation::InitSwarm()
 
         // TODO: Now define uav's parameters hard-code, future make it prettier.
         Uav agent(randomUavStartPos, 50.0, 3.0);
+        agent.SetCurrentGoal(SWARM_CENTER);
 
         m_Agents.push_back(agent);
 
@@ -100,5 +101,73 @@ void SwarmSimulator::SwarmSphereFormation::SaveSwarmStateIntoDB()
         {
             qWarning() << "Failed to insert data:" << query.lastError().text();
         }
+    }
+}
+
+void SwarmSimulator::SwarmSphereFormation::BoidsStep()
+{
+    static const double SEPARATION_DISTANCE = 10; // TODO: prove it;
+
+    QVector<QVector<double>> distances(AGENTS_COUNT, QVector<double>(AGENTS_COUNT, -1));
+    for(int i = 0; i < AGENTS_COUNT; i++)
+    {
+        for(int j = 0; j < AGENTS_COUNT; j++)
+        {
+            distances[i][j] = m_Agents[i].CurrentPos().distanceToPoint(m_Agents[j].CurrentPos());
+            distances[j][i] = distances[i][j];
+        }
+    }
+
+    // Move each agents;
+    for(int i = 0; i < AGENTS_COUNT; i++)
+    {
+        Uav agent = m_Agents[i];
+        // Rule `Cohesion`: steer to move towards the average position (center of mass) of local flockmates;
+        QVector3D cohesion;
+        for(int j = 0; j < AGENTS_COUNT; j++)
+        {
+            if (i != j && distances[i][j] <= agent.InterractionRadius())
+            {
+                cohesion += m_Agents[j].CurrentPos();
+            }
+        }
+        cohesion /= AGENTS_COUNT - 1;
+        // Moving vector of Agent `i` towards center of mass for 1%.
+        // TODO: Prove this coefficient;
+        cohesion = (cohesion - m_Agents[i].CurrentPos()) / 100;
+
+        // Rule `Separation`: steer avoid crowding local flockmates;
+        QVector3D separation;
+        for(int j = 0; j < AGENTS_COUNT; j++)
+        {
+
+            if (i != j && distances[i][j] <= agent.InterractionRadius())
+            {
+                if (distances[i][j] <= SEPARATION_DISTANCE)
+                {
+                    separation -= (agent.CurrentPos() - m_Agents[j].CurrentPos());
+                }
+            }
+        }
+        // Rule `Alignment`: steer towards the average heading of local flockmates;
+        QVector3D alignment;
+        // TODO: Pass this.
+
+        // Rule `Tendency`: steer towards self point;
+        QVector3D tendency;
+        tendency = (agent.CurrentGoal() - agent.CurrentPos()) / 100; // TODO: prove it.
+
+        agent.SetSpeed(agent.Speed() + cohesion + separation + tendency);
+    }
+}
+
+void SwarmSimulator::SwarmSphereFormation::RunSimulation(int steps)
+{
+    m_CurrentIteration = 0;
+    while (m_CurrentIteration < steps)
+    {
+        BoidsStep();
+        SaveSwarmStateIntoDB();
+        m_CurrentIteration++;
     }
 }
