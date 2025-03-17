@@ -13,23 +13,22 @@ public:
     double CurrentPos() const;
     double InterractionRadius() const;
     double SelfRadius() const;
-    double Speed() const;
+    QVector3D Speed() const;
 
     void setCurrentPos(const QVector3D & pos);
-    void setSpeed(double newSpeed);
+    void setSpeed(const QVector3D & newSpeed);
 
 private:
     // Position of drone in space.
     QVector3D m_CurrentPosition;
+    // Current velocity of drone;
+    QVector3D m_Speed;
 
     // Radius of interraction with other drones;
     double m_InterractionRadius;
 
     // Radius of self "care": radius which represents "real" sizes of drone;
     double m_SelfRadius;
-
-    // Current velocity of drone;
-    double m_Speed;
 };
 
 #endif // UAV_H
