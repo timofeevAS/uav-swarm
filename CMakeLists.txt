@@ -15,9 +15,13 @@ find_package(Qt6 REQUIRED COMPONENTS Sql)
 
 
 set(PROJECT_SOURCES
-        main.cpp
-        mainwindow.cpp
-        mainwindow.h
+        src/main.cpp
+        src/mainwindow.cpp
+        src/mainwindow.h
+        src/uav/uav.h
+        src/uav/uav.cpp
+        src/swarmsimulator/swarmsimulator.cpp
+        src/swarmsimulator/swarmsimulator.h
         mainwindow.ui
 )
 
@@ -25,9 +29,6 @@ if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
     qt_add_executable(uav-swarm
         MANUAL_FINALIZATION
         ${PROJECT_SOURCES}
-        uav.h uav.cpp
-        swarmsimulator.h swarmsimulator.cpp
-        create.sql
     )
 # Define target properties for Android with Qt 6 as:
 #    set_property(TARGET uav-swarm APPEND PROPERTY QT_ANDROID_PACKAGE_SOURCE_DIR

@@ -5,7 +5,7 @@
 #include "QVector"
 #include <QtSql/QSqlDatabase>
 
-#include "uav.h"
+#include "../uav/uav.h"
 
 namespace SwarmSimulator
 {

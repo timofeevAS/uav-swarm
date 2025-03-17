@@ -1,7 +1,7 @@
 #include "mainwindow.h"
 #include "./ui_mainwindow.h"
 
-#include "swarmsimulator.h"
+#include "swarmsimulator/swarmsimulator.h"
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
