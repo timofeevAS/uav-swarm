@@ -11,7 +11,7 @@ int main(int argc, char *argv[])
     QVector<Uav> uavs =
     {
         Uav(QVector3D(5, 10, 0), 100, 1, 1, 100),
-        Uav(QVector3D(50, 50, 0), 100, 1, 2, 300),
+        Uav(QVector3D(50, 50, 0), 100, 1, 2, 200),
         Uav(QVector3D(10, 10, 0), 100, 1, 3, 100),
         Uav(QVector3D(15, 15, 0), 100, 1, 4, 100),
         Uav(QVector3D(8, 10, 0), 100, 1, 5, 100),
