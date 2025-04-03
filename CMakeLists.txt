@@ -8,21 +8,22 @@ set(CMAKE_AUTORCC ON)
 
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
+set(CMAKE_BUILD_TYPE Debug)
 
 find_package(QT NAMES Qt6 Qt5 REQUIRED COMPONENTS Widgets)
-find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Widgets)
+find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Widgets Core)
 find_package(Qt6 REQUIRED COMPONENTS Sql)
 
 
 set(PROJECT_SOURCES
         src/main.cpp
-        src/mainwindow.cpp
-        src/mainwindow.h
+
+
         src/uav/uav.h
         src/uav/uav.cpp
         src/swarmsimulator/swarmsimulator.cpp
         src/swarmsimulator/swarmsimulator.h
-        mainwindow.ui
+
 )
 
 if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
@@ -50,6 +51,7 @@ endif()
 
 target_link_libraries(uav-swarm PRIVATE Qt${QT_VERSION_MAJOR}::Widgets)
 target_link_libraries(uav-swarm PRIVATE Qt${QT_VERSION_MAJOR}::Sql)
+target_link_libraries(uav-swarm PRIVATE Qt${QT_VERSION_MAJOR}::Core)
 
 # Qt for iOS sets MACOSX_BUNDLE_GUI_IDENTIFIER automatically since Qt 6.1.
 # If you are developing for iOS or macOS you should consider setting an

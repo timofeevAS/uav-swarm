@@ -3,10 +3,11 @@ import matplotlib.pyplot as plt
 from mpl_toolkits.mplot3d.art3d import Poly3DCollection
 
 # Параметры
-N = 20         # количество дронов
-r = 2        # радиус безопасности одного дрона
+N = 5        # количество дронов
+r = 1        # радиус безопасности одного дрона
 R_c = np.array([0, 0, 0])  # центр роя
-rho = 0.6
+Real_R_C = np.array([10,10,10])
+rho = 0.8
 
 positions = []
 layers = []
@@ -44,17 +45,24 @@ while len(positions) < N:
 
     layer_radius += 2 * r  # следующий слой
 
-positions = np.array(positions) * (1/rho)
 unique_layers = (np.array(sorted(set(layers)))) * (1/rho) + r
 layer_radius = max(unique_layers)
 
-
+positions = np.array(positions) * (1/rho)
 distances = np.zeros((N, N))
 for i in range(N):
     for j in range(N):
         distances[i, j] = np.linalg.norm(positions[i] - positions[j])
 
 print(distances)
+
+# Сдвин позициий к центру реальному
+positions += Real_R_C
+
+
+print('Coordinates:')
+print(positions)
+
 
 # Визуализация
 fig = plt.figure()
@@ -64,14 +72,14 @@ ax = fig.add_subplot(111, projection='3d')
 u, v = np.mgrid[0:2*np.pi:30j, 0:np.pi:15j]
 real_layers = np.array(unique_layers) + r
 for rad in real_layers:
-    x = rad * np.cos(u) * np.sin(v) + R_c[0]
-    y = rad * np.sin(u) * np.sin(v) + R_c[1]
-    z = rad * np.cos(v) + R_c[2]
+    x = rad * np.cos(u) * np.sin(v) + Real_R_C[0]
+    y = rad * np.sin(u) * np.sin(v) + Real_R_C[1]
+    z = rad * np.cos(v) + Real_R_C[2]
     ax.plot_surface(x, y, z, color='gray', alpha=0.1, linewidth=0)
 
 # Дроны и центр
 ax.scatter(positions[:, 0], positions[:, 1], positions[:, 2], c='blue', s=30, label='Дроны')
-ax.scatter(*R_c, c='red', s=50, label='Центр')
+ax.scatter(*Real_R_C, c='red', s=50, label='Центр')
 
 for pt in positions:
     # Параметрическое уравнение для сферы
@@ -84,8 +92,8 @@ for pt in positions:
  
 ax.set_title(f'Упаковка по оболочкам (N={N})')
 ax.legend()
-ax.set_xlim([-layer_radius, layer_radius])
-ax.set_ylim([-layer_radius, layer_radius])
-ax.set_zlim([-layer_radius, layer_radius])
+ax.set_xlim([-layer_radius-Real_R_C[0], layer_radius+Real_R_C[0]])
+ax.set_ylim([-layer_radius-Real_R_C[1], layer_radius+Real_R_C[1]])
+ax.set_zlim([-layer_radius-Real_R_C[2], layer_radius+Real_R_C[2]])
 plt.tight_layout()
 plt.show()

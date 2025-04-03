@@ -16,7 +16,9 @@ namespace SwarmSimulator
 class SwarmSphereFormation
 {
 public:
-    SwarmSphereFormation(int agentsCount, QVector3D swarmCenterPoint, double swarmDensity);
+    SwarmSphereFormation(const QVector<Uav> & uavs,
+                         QVector3D swarmCenterPoint,
+                         double swarmDensity);
     ~SwarmSphereFormation();
 
     void RunSimulation(int steps = 5);
@@ -24,7 +26,7 @@ private:
     // Constants.
     unsigned short AGENTS_COUNT;
     double DENSITY;
-    double WORLD_MAX_SIZE;
+    int16_t WORLD_MAX_SIZE;
     QVector3D SWARM_CENTER;
     int EXPERIMENT_ID;
 
@@ -35,6 +37,7 @@ private:
     void InitSwarm();
     void SaveSwarmStateIntoDB();
     void BoidsStep();
+    void IsNeedStop();
 };
 
 
