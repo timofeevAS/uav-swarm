@@ -11,7 +11,8 @@ CREATE TABLE swarm_state (
     speed_z REAL,
     state TEXT DEFAULT "",
     experiment_id INTEGER,
+    uav_id INTEGER,
     target_x REAL,
     target_y REAL,
-    target_z REAL,
+    target_z REAL
 )

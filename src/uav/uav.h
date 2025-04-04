@@ -32,6 +32,7 @@ public:
     // Radius of self "care": radius which represents "real" sizes of drone;
     double m_SelfRadius;
     uint16_t m_Id;
+    State m_State;
 };
 
 #endif // UAV_H
